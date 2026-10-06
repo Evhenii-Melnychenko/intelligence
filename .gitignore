@@ -1,5 +1,21 @@
-**/.idea/
-/**/node_modules/
-/**/package-lock.json
+# Local OSPanel environment and WordPress configuration
+/.osp/
+/wp-config.php
+/**/wp-config.php
+/.htaccess
 
-app/dev
+# User uploads and generated WordPress files
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/backups/
+/wp-content/backup/
+/wp-content/debug.log
+
+# Local dependencies, environment files, and logs
+**/node_modules/
+**/.env
+**/.env.*
+*.log
+Thumbs.db
+.DS_Store
