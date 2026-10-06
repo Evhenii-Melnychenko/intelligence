@@ -1,0 +1,91 @@
+@mixin fonts($size, $lh, $fw: 400) {
+  font-size: $size;
+  line-height: $lh;
+  font-weight: $fw;
+}
+
+@mixin fontsTypography($fontName, $fontWeight, $fontStyle: normal) {
+  $fontWeightArr: (
+    Thin: 100,
+    ThinItalic: 100,
+    ExtraLight: 200,
+    ExtraLightItalic: 200,
+    Light: 300,
+    LightItalic: 300,
+    Regular: 400,
+    Italic: 400,
+    Medium: 500,
+    MediumItalic: 500,
+    SemiBold: 600,
+    SemiBoldItalic: 600,
+    Bold: 700,
+    BoldItalic: 700,
+    ExtraBold: 800,
+    ExtraBoldItalic: 800,
+    Black: 900,
+    BlackItalic: 900
+  );
+
+  @font-face {
+    font-display: swap;
+    font-family: $fontName;
+    src: url("../fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff2") format('woff2'),
+      url("../fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff") format('woff');
+    font-weight: map-get($fontWeightArr, $fontWeight);
+    font-style: $fontStyle;
+  }
+}
+
+@mixin backgroundImage($image, $size: auto, $posX: center, $posY: center) {
+  background-image: url('../images/#{$image}');
+  background-repeat: no-repeat;
+  background-position: $posX $posY;
+  background-size: $size;
+}
+
+@mixin inputAutofill($bg, $color) {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 45px $bg inset !important;
+    -webkit-text-fill-color: $color !important;
+  }
+}
+
+@mixin scrollbar($height, $boxShadow, $bg) {
+  height: $height;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px $boxShadow;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $bg;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    opacity: .7;
+  }
+}
+
+@mixin line($top: 16%, $bg: #000, $maxWidth: 55%) {
+  content: "";
+  background: $bg;
+  position: absolute;
+  right: 0;
+  top: $top;
+  width: 100%;
+  height: .125rem;
+  max-width: $maxWidth;
+  transition: width .2s ease-in-out;
+}
