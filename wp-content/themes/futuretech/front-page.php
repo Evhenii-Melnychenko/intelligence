@@ -96,19 +96,19 @@ $home_categories = get_categories( array(
 			<a class="home-resource" href="<?php echo esc_url( futuretech_page_url( 'resources' ) ); ?>">
 				<img class="home-resource__icon" src="<?php echo esc_url( get_theme_file_uri( '/assets/images/home/ebooks.svg' ) ); ?>" alt="" width="80" height="80" loading="lazy">
 				<h3 class="home-resource__title"><?php esc_html_e( 'E-books', 'ai-futuretech' ); ?></h3>
-				<p class="home-resource__description"><?php esc_html_e( 'Practical guides to emerging technologies and the teams building them.', 'ai-futuretech' ); ?></p>
+				<p><?php esc_html_e( 'Practical guides to emerging technologies and the teams building them.', 'ai-futuretech' ); ?></p>
 				<span class="home-resource__link"><?php esc_html_e( 'Explore e-books', 'ai-futuretech' ); ?> ↗</span>
 			</a>
 			<a class="home-resource" href="<?php echo esc_url( futuretech_page_url( 'resources' ) ); ?>">
 				<img class="home-resource__icon" src="<?php echo esc_url( get_theme_file_uri( '/assets/images/home/whitepapers.svg' ) ); ?>" alt="" width="80" height="80" loading="lazy">
 				<h3 class="home-resource__title"><?php esc_html_e( 'Whitepapers', 'ai-futuretech' ); ?></h3>
-				<p class="home-resource__description"><?php esc_html_e( 'Research and clear-eyed perspectives on what is possible next.', 'ai-futuretech' ); ?></p>
+				<p><?php esc_html_e( 'Research and clear-eyed perspectives on what is possible next.', 'ai-futuretech' ); ?></p>
 				<span class="home-resource__link"><?php esc_html_e( 'Read whitepapers', 'ai-futuretech' ); ?> ↗</span>
 			</a>
 			<a class="home-resource" href="<?php echo esc_url( futuretech_page_url( 'podcasts' ) ); ?>">
 				<img class="home-resource__icon" src="<?php echo esc_url( get_theme_file_uri( '/assets/images/home/research_blogs.svg' ) ); ?>" alt="" width="80" height="80" loading="lazy">
 				<h3 class="home-resource__title"><?php esc_html_e( 'Podcasts & research', 'ai-futuretech' ); ?></h3>
-				<p class="home-resource__description"><?php esc_html_e( 'Listen in and go deeper with experts on the ideas shaping tomorrow.', 'ai-futuretech' ); ?></p>
+				<p><?php esc_html_e( 'Listen in and go deeper with experts on the ideas shaping tomorrow.', 'ai-futuretech' ); ?></p>
 				<span class="home-resource__link"><?php esc_html_e( 'Listen and learn', 'ai-futuretech' ); ?> ↗</span>
 			</a>
 		</div>

@@ -12,6 +12,135 @@ document.body.classList.remove('no-js');var i=new Image;i.onload=i.onerror=funct
 
 /***/ }),
 
+/***/ "./app/src/js/contact.js":
+/*!*******************************!*\
+  !*** ./app/src/js/contact.js ***!
+  \*******************************/
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initContactForm: function() { return /* binding */ initContactForm; }
+/* harmony export */ });
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function initContactForm() {
+  var form = document.querySelector('[data-contact-form]');
+  var status = document.querySelector('[data-contact-status]');
+  var submitButton = form === null || form === void 0 ? void 0 : form.querySelector('[type="submit"]');
+  if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement) || !(submitButton instanceof HTMLButtonElement)) {
+    return;
+  }
+  var fields = Array.from(form.querySelectorAll('input:not([type="hidden"]), textarea'));
+  var clearFieldError = function clearFieldError(field) {
+    return field.removeAttribute('aria-invalid');
+  };
+  fields.forEach(function (field) {
+    field.addEventListener('input', function () {
+      return clearFieldError(field);
+    });
+    field.addEventListener('change', function () {
+      return clearFieldError(field);
+    });
+  });
+  form.addEventListener('submit', /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(event) {
+      var _config$errors2;
+      var invalidField, config, formData, _config$errors, _result$data3, response, result, _result$data, _result$data2, _config$errors3, fieldErrors, firstInvalid, _config$errors4, genericError, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            event.preventDefault();
+            status.textContent = '';
+            fields.forEach(clearFieldError);
+            invalidField = fields.find(function (field) {
+              return !field.checkValidity();
+            });
+            if (!invalidField) {
+              _context.n = 1;
+              break;
+            }
+            invalidField.setAttribute('aria-invalid', 'true');
+            invalidField.reportValidity();
+            return _context.a(2);
+          case 1:
+            config = window.futuretechContact;
+            formData = new FormData(form);
+            if (!(!(config !== null && config !== void 0 && config.ajaxUrl) || !config.nonce)) {
+              _context.n = 2;
+              break;
+            }
+            status.textContent = (config === null || config === void 0 || (_config$errors = config.errors) === null || _config$errors === void 0 ? void 0 : _config$errors.unavailable) || 'The contact form is not available right now. Please try again later.';
+            status.dataset.state = 'error';
+            return _context.a(2);
+          case 2:
+            formData.set('action', 'futuretech_contact_form');
+            formData.set('nonce', config.nonce);
+            submitButton.disabled = true;
+            submitButton.classList.add('is-loading');
+            submitButton.setAttribute('aria-busy', 'true');
+            status.dataset.state = 'loading';
+            status.textContent = ((_config$errors2 = config.errors) === null || _config$errors2 === void 0 ? void 0 : _config$errors2.sending) || 'Sending your message…';
+            _context.p = 3;
+            _context.n = 4;
+            return fetch(config.ajaxUrl, {
+              method: 'POST',
+              credentials: 'same-origin',
+              body: formData
+            });
+          case 4:
+            response = _context.v;
+            _context.n = 5;
+            return response.json();
+          case 5:
+            result = _context.v;
+            if (!(!response.ok || !result.success)) {
+              _context.n = 6;
+              break;
+            }
+            fieldErrors = ((_result$data = result.data) === null || _result$data === void 0 ? void 0 : _result$data.fields) || {};
+            firstInvalid = fields.find(function (field) {
+              return Object.prototype.hasOwnProperty.call(fieldErrors, field.name);
+            });
+            if (firstInvalid) {
+              firstInvalid.setAttribute('aria-invalid', 'true');
+              firstInvalid.focus();
+            }
+            throw new Error(((_result$data2 = result.data) === null || _result$data2 === void 0 ? void 0 : _result$data2.message) || ((_config$errors3 = config.errors) === null || _config$errors3 === void 0 ? void 0 : _config$errors3.generic) || 'Your message could not be sent. Please try again.');
+          case 6:
+            form.reset();
+            status.dataset.state = 'success';
+            status.textContent = ((_result$data3 = result.data) === null || _result$data3 === void 0 ? void 0 : _result$data3.message) || 'Thanks for reaching out. Your message has been sent.';
+            _context.n = 8;
+            break;
+          case 7:
+            _context.p = 7;
+            _t = _context.v;
+            status.dataset.state = 'error';
+            genericError = ((_config$errors4 = config.errors) === null || _config$errors4 === void 0 ? void 0 : _config$errors4.generic) || 'Your message could not be sent. Please try again.';
+            status.textContent = _t instanceof Error && !(_t instanceof SyntaxError) && !(_t instanceof TypeError) ? _t.message : genericError;
+          case 8:
+            _context.p = 8;
+            submitButton.disabled = false;
+            submitButton.classList.remove('is-loading');
+            submitButton.removeAttribute('aria-busy');
+            return _context.f(8);
+          case 9:
+            return _context.a(2);
+        }
+      }, _callee, null, [[3, 7, 8, 9]]);
+    }));
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+}
+
+/***/ }),
+
 /***/ "./app/src/js/header.js":
 /*!******************************!*\
   !*** ./app/src/js/header.js ***!
@@ -109,6 +238,7 @@ function initPostTabs() {
     }
     var cards = Array.from(grid.querySelectorAll('[data-post-card]'));
     var emptyState = grid.querySelector('[data-post-empty]');
+    var featuredCardLimit = Number(grid.dataset.postFeaturedCount || 0);
     var activateTab = function activateTab(activeTab, moveFocus) {
       var selectedCategory = activeTab.dataset.postFilter;
       var visibleCards = 0;
@@ -127,6 +257,9 @@ function initPostTabs() {
         var categories = (card.dataset.categories || '').split(/\s+/).filter(Boolean);
         var isVisible = selectedCategory === 'all' || categories.includes(selectedCategory);
         card.hidden = !isVisible;
+        if (featuredCardLimit > 0) {
+          card.classList.toggle('resource-card--featured', isVisible && visibleCards < featuredCardLimit);
+        }
         if (isVisible) {
           visibleCards += 1;
         }
@@ -156,6 +289,13 @@ function initPostTabs() {
         activateTab(tabs[nextIndex], true);
       });
     });
+    var requestedResourceType = new URLSearchParams(window.location.search).get('resource_type');
+    var requestedTab = tabs.find(function (tab) {
+      return tab.dataset.postFilter === requestedResourceType;
+    });
+    if (requestedTab) {
+      activateTab(requestedTab, false);
+    }
   });
 }
 
@@ -300,6 +440,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./header */ "./app/src/js/header.js");
 /* harmony import */ var _posts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./posts */ "./app/src/js/posts.js");
 /* harmony import */ var _reader_reviews__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reader-reviews */ "./app/src/js/reader-reviews.js");
+/* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contact */ "./app/src/js/contact.js");
+
 
 
 
@@ -308,8 +450,8 @@ document.addEventListener('DOMContentLoaded', function () {
   (0,_header__WEBPACK_IMPORTED_MODULE_1__.initHeaderMenu)();
   (0,_posts__WEBPACK_IMPORTED_MODULE_2__.initPostTabs)();
   (0,_reader_reviews__WEBPACK_IMPORTED_MODULE_3__.initReaderReviewsSlider)();
+  (0,_contact__WEBPACK_IMPORTED_MODULE_4__.initContactForm)();
 });
 }();
 /******/ })()
 ;
-//# sourceMappingURL=main.js.map

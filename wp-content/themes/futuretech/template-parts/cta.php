@@ -1,5 +1,5 @@
 <section class="cta">
-	<div class="site-container home-cta">
+	<div class="site-container cta__wrapper">
 		<div class="cta-panel" aria-labelledby="cta-panel-title">
 			<div class="cta-panel__intro">
 				<div class="cta-panel__logo" aria-hidden="true">

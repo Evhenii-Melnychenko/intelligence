@@ -1,39 +1,39 @@
 <?php
-$is_featured  = ! empty( $args['featured'] );
-$episode_id   = get_the_ID();
-$show_category = isset( $args['show_category'] ) ? $args['show_category'] : null;
-$episode_image = get_the_post_thumbnail_url( $episode_id, 'futuretech-card' );
-$categories   = array_filter(
-	get_the_category( $episode_id ),
-	function ( $category ) use ( $show_category ) {
-		return (
-			! in_array( $category->slug, array( 'podcast', 'podcasts', 'uncategorized' ), true ) &&
-			( ! $show_category || (int) $category->term_id !== (int) $show_category->term_id )
-		);
+	$is_featured  = ! empty( $args['featured'] );
+	$episode_id   = get_the_ID();
+	$show_category = isset( $args['show_category'] ) ? $args['show_category'] : null;
+	$episode_image = get_the_post_thumbnail_url( $episode_id, 'futuretech-card' );
+	$categories   = array_filter(
+		get_the_category( $episode_id ),
+		function ( $category ) use ( $show_category ) {
+			return (
+				! in_array( $category->slug, array( 'podcast', 'podcasts', 'uncategorized' ), true ) &&
+				( ! $show_category || (int) $category->term_id !== (int) $show_category->term_id )
+			);
+		}
+	);
+	$category_name = $show_category ? $show_category->name : ( ! empty( $categories ) ? reset( $categories )->name : __( 'Podcast', 'ai-futuretech' ) );
+	$host = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_host', true ) : '';
+	$rating = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_rating', true ) : '';
+	$listen_url = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_listen_url', true ) : '';
+	$episode_total = $show_category ? (int) $show_category->count : 0;
+	$average_length = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_average_length', true ) : '';
+	$release_frequency = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_release_frequency', true ) : '';
+
+	if ( ! $episode_image ) {
+		$episode_image = futuretech_post_fallback_image( $episode_id );
 	}
-);
-$category_name = $show_category ? $show_category->name : ( ! empty( $categories ) ? reset( $categories )->name : __( 'Podcast', 'ai-futuretech' ) );
-$host = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_host', true ) : '';
-$rating = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_rating', true ) : '';
-$listen_url = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_listen_url', true ) : '';
-$episode_total = $show_category ? (int) $show_category->count : 0;
-$average_length = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_average_length', true ) : '';
-$release_frequency = $show_category ? get_term_meta( $show_category->term_id, 'futuretech_podcast_release_frequency', true ) : '';
 
-if ( ! $episode_image ) {
-	$episode_image = futuretech_post_fallback_image( $episode_id );
-}
+	if ( ! $host ) {
+		$host = get_the_author();
+	}
 
-if ( ! $host ) {
-	$host = get_the_author();
-}
+	if ( '' === $rating ) {
+		$rating = 5;
+	}
 
-if ( '' === $rating ) {
-	$rating = 5;
-}
-
-if ( ! $listen_url ) {
-	$listen_url = get_permalink( $episode_id );
+	if ( ! $listen_url ) {
+		$listen_url = get_permalink( $episode_id );
 }
 ?>
 <article <?php post_class( 'podcast-episode' . ( $is_featured ? ' podcast-episode--featured' : '' ) ); ?>>
@@ -41,7 +41,7 @@ if ( ! $listen_url ) {
 		<div class="podcast-episode__show">
 			<div class="podcast-episode__show-mark" aria-hidden="true"><span></span><span></span></div>
 			<div class="podcast-episode__show-heading">
-				<h2 class="podcast-episode__show-title"><?php echo esc_html( $category_name ); ?></h2>
+				<h3><?php echo esc_html( $category_name ); ?></h3>
 				<div class="podcast-episode__rating" role="img" aria-label="<?php echo esc_attr( sprintf( __( '%s out of 5 stars', 'ai-futuretech' ), number_format_i18n( $rating, 1 ) ) ); ?>">
 					<?php for ( $star = 1; $star <= 5; $star++ ) : ?>
 						<span class="<?php echo $star <= (float) $rating ? 'is-active' : ''; ?>" aria-hidden="true">★</span>
@@ -73,8 +73,8 @@ if ( ! $listen_url ) {
 					<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>"><?php echo esc_html( get_the_date( 'M j, Y' ) ); ?></time>
 				</div>
 			<?php endif; ?>
-			<h2 class="podcast-episode__title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-			<p class="podcast-episode__excerpt"><?php echo esc_html( wp_trim_words( get_the_excerpt(), $is_featured ? 26 : 18, '…' ) ); ?></p>
+			<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+			<p><?php echo esc_html( wp_trim_words( get_the_excerpt(), $is_featured ? 26 : 18, '…' ) ); ?></p>
 			<?php if ( $is_featured ) : ?>
 				<?php
 				$episode_stats = array(

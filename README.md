@@ -131,6 +131,44 @@ Each show displays its newest post as its featured episode. The total episode
 count comes from the number of published posts assigned to that show's category.
 The latest episodes grid lists other recent posts from the Podcasts category.
 
+### Resources page
+
+The Resources page uses the `Resources` page template and regular WordPress
+posts. Its type filters use the `Resource types` taxonomy, which the theme
+registers for posts and seeds with `Whitepapers`, `Books`, and `Reports`.
+
+1. Create or edit a page with the slug `resources` and select the `Resources`
+   template in the page editor. The template displays the heading `Unlock a
+   World of Knowledge`; page content supplies the introductory description.
+2. Edit each post that should appear as a resource. Assign a WordPress category
+   for its topic and select a resource type (`Whitepapers`, `Books`, or
+   `Reports`) in the post editor. Add a featured image and excerpt for the
+   resource card.
+3. Optionally add the page to the **Primary navigation** menu.
+
+The page lists the 12 newest published posts. The tabs filter those posts by
+resource type; `All` also includes posts without a resource type. The topic
+shown on each card comes from its first assigned WordPress category. The first
+two visible cards use the larger featured layout.
+
+The statistics strip currently shows three automatically calculated values:
+the total number of published posts, the number of non-empty post categories,
+and the number of resource types. These are live WordPress counts, not manually
+editable figures or the fixed four metrics shown in the design mockup.
+
+### Contact page
+
+Create or edit a page with the slug `contact` and assign the `Contact` template.
+The page provides contact links, an AJAX contact form, and a native
+`details`/`summary` FAQ accordion that works without JavaScript.
+
+Contact form messages are sent to the site administration email configured in
+**Settings → General**. The form validates required fields in the browser and
+again on the server, checks a WordPress nonce, and includes a honeypot field.
+Configure WordPress mail delivery (typically through the site's mail provider
+or an SMTP plugin) to receive submissions. The privacy checkbox links to the
+site's Privacy Policy page when one is configured under **Settings → Privacy**.
+
 ### Other post content
 
 Story and resource cards are generated from regular WordPress posts. Categories,

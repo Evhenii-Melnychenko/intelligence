@@ -214,22 +214,11 @@
   font-weight: 500;
 }
 
-.home-resource__description {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
 .home-resource__link {
   display: inline-block;
   margin-top: 19px;
   color: var(--color-accent);
   font-size: 13px;
-}
-
-.home-cta {
-  padding-block: clamp(60px, 8vw, 100px);
 }
 
 @media (max-width: 850px) {

@@ -10,6 +10,7 @@ export function initPostTabs() {
 
         const cards = Array.from(grid.querySelectorAll('[data-post-card]'));
         const emptyState = grid.querySelector('[data-post-empty]');
+        const featuredCardLimit = Number(grid.dataset.postFeaturedCount || 0);
 
         const activateTab = (activeTab, moveFocus) => {
             const selectedCategory = activeTab.dataset.postFilter;
@@ -33,6 +34,10 @@ export function initPostTabs() {
                 const categories = (card.dataset.categories || '').split(/\s+/).filter(Boolean);
                 const isVisible = selectedCategory === 'all' || categories.includes(selectedCategory);
                 card.hidden = !isVisible;
+
+                if (featuredCardLimit > 0) {
+                    card.classList.toggle('resource-card--featured', isVisible && visibleCards < featuredCardLimit);
+                }
 
                 if (isVisible) {
                     visibleCards += 1;
@@ -65,5 +70,11 @@ export function initPostTabs() {
                 activateTab(tabs[nextIndex], true);
             });
         });
+
+        const requestedResourceType = new URLSearchParams(window.location.search).get('resource_type');
+        const requestedTab = tabs.find((tab) => tab.dataset.postFilter === requestedResourceType);
+        if (requestedTab) {
+            activateTab(requestedTab, false);
+        }
     });
 }

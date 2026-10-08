@@ -7,7 +7,6 @@ body {
 
 h1 {
   font-size: clamp(2.1875rem, 1.5625rem + 3.125vw, 4.375rem);
-  line-height: 120%;
   font-weight: 500;
   margin-block-end: 10px;
   letter-spacing: -3%;
@@ -15,23 +14,24 @@ h1 {
 
 h2 {
   font-size: clamp(1.75rem, 1.2143rem + 2.6786vw, 3.625rem);
-  line-height: 130%;
   font-weight: 500;
   margin-block-end: 30px;
 }
 
 h3 {
   font-size: clamp(1.25rem, 0.8929rem + 1.7857vw, 2.5rem);
-  line-height: 33px;
   font-weight: 500;
   margin-block-end: 15px;
 }
 
 h4 {
   font-size: clamp(1.25rem, 1.1786rem + 0.3571vw, 1.5rem);
-  line-height: 150%;
   font-weight: 500;
   margin-block-end: 0;
+}
+
+h1, h2, h3, h4 {
+   line-height: 120%;
 }
 
 p {
@@ -40,4 +40,5 @@ p {
   font-weight: 400;
   margin-block-end: 20px;
   color: var(--color-muted);
+  text-wrap: balance;
 }

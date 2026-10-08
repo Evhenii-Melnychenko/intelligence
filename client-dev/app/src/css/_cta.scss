@@ -1,6 +1,10 @@
 .cta {
   background: var(--color-surface);
 
+  &__wrapper {
+    padding-block: clamp(60px, 8vw, 100px);
+  }
+
   &-panel {
     display: grid;
     gap: 24px;

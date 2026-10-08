@@ -78,26 +78,27 @@ if ( $podcast_category ) {
 $latest_episodes = get_posts( $podcast_args );
 ?>
 <main id="main-content" class="site-main">
-	<div class="site-container podcast-page">
 		<header class="podcast-page__hero">
-			<div>
-				<span class="eyebrow"><?php esc_html_e( 'Podcasts', 'ai-futuretech' ); ?></span>
-				<h1 class="podcast-page__title"><?php the_title(); ?></h1>
-				<p class="podcast-page__description"><?php esc_html_e( 'Unlock the world of artificial intelligence through conversations with the thinkers, builders and leaders shaping its future.', 'ai-futuretech' ); ?></p>
+			<div class="site-container podcast-page">
+				<div>
+					<h1 class="podcast-page__title"><?php the_title(); ?></h1>
+					<p class="podcast-page__description"><?php esc_html_e( 'Unlock the world of artificial intelligence through conversations with the thinkers, builders and leaders shaping its future.', 'ai-futuretech' ); ?></p>
+				</div>
+				<div class="podcast-page__intro"><?php the_content(); ?></div>
 			</div>
-			<div class="podcast-page__intro"><?php the_content(); ?></div>
 		</header>
+		<div class="site-container podcast-page">
 		<?php if ( ! empty( $featured_shows ) ) : ?>
 			<?php global $post; ?>
 			<section class="podcast-page__featured" aria-label="<?php esc_attr_e( 'Featured podcast episodes', 'ai-futuretech' ); ?>">
 				<?php foreach ( $featured_shows as $featured_show ) : ?>
 					<?php
-					$post = $featured_show['episode'];
-					setup_postdata( $post );
-					get_template_part( 'template-parts/podcast-episode', null, array(
-						'featured'      => true,
-						'show_category' => $featured_show['category'],
-					) );
+						$post = $featured_show['episode'];
+						setup_postdata( $post );
+						get_template_part( 'template-parts/podcast-episode', null, array(
+							'featured'      => true,
+							'show_category' => $featured_show['category'],
+						) );
 					?>
 				<?php endforeach; ?>
 			</section>
@@ -109,26 +110,25 @@ $latest_episodes = get_posts( $podcast_args );
 			<section class="podcast-page__episodes" aria-labelledby="podcast-episodes-title">
 				<div class="section-heading">
 					<div>
-						<span class="eyebrow"><?php esc_html_e( 'More to explore', 'ai-futuretech' ); ?></span>
 						<h2 class="section-heading__title" id="podcast-episodes-title"><?php esc_html_e( 'Latest Podcast Episodes', 'ai-futuretech' ); ?></h2>
 					</div>
 				</div>
 				<div class="podcast-page__grid">
 					<?php foreach ( $latest_episodes as $episode_post ) : ?>
 						<?php
-						$post = $episode_post;
-						setup_postdata( $post );
-						get_template_part( 'template-parts/podcast-episode', null, array( 'featured' => false ) );
+							$post = $episode_post;
+							setup_postdata( $post );
+							get_template_part( 'template-parts/podcast-episode', null, array( 'featured' => false ) );
 						?>
 					<?php endforeach; ?>
 				</div>
 			</section>
 		<?php endif; ?>
 		<?php wp_reset_postdata(); ?>
+		</div>
 		
 		<?php get_template_part( 'template-parts/cta' ); ?>
 		
-	</div>
 </main>
 <?php
 get_footer();

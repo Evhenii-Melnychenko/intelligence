@@ -22,6 +22,54 @@ function futuretech_setup() {
 }
 add_action( 'after_setup_theme', 'futuretech_setup' );
 
+function futuretech_contact_email() {
+	return 'contact@ai-podcasts.com';
+}
+
+function futuretech_register_resource_type_taxonomy() {
+	$labels = array(
+		'name'          => __( 'Resource types', 'ai-futuretech' ),
+		'singular_name' => __( 'Resource type', 'ai-futuretech' ),
+		'search_items'  => __( 'Search resource types', 'ai-futuretech' ),
+		'all_items'     => __( 'All resource types', 'ai-futuretech' ),
+		'edit_item'     => __( 'Edit resource type', 'ai-futuretech' ),
+		'update_item'   => __( 'Update resource type', 'ai-futuretech' ),
+		'add_new_item'  => __( 'Add new resource type', 'ai-futuretech' ),
+		'menu_name'     => __( 'Resource types', 'ai-futuretech' ),
+	);
+
+	register_taxonomy(
+		'resource_type',
+		'post',
+		array(
+			'labels'            => $labels,
+			'hierarchical'      => true,
+			'public'            => false,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_rest'      => true,
+			'rewrite'           => false,
+			'query_var'         => false,
+		)
+	);
+
+	$default_types = array(
+		'whitepapers' => __( 'Whitepapers', 'ai-futuretech' ),
+		'books'       => __( 'Books', 'ai-futuretech' ),
+		'reports'     => __( 'Reports', 'ai-futuretech' ),
+	);
+
+	foreach ( $default_types as $slug => $name ) {
+		if ( ! get_term_by( 'slug', $slug, 'resource_type' ) ) {
+			$result = wp_insert_term( $name, 'resource_type', array( 'slug' => $slug ) );
+			if ( is_wp_error( $result ) ) {
+				error_log( 'Futuretech resource type could not be created: ' . $result->get_error_message() );
+			}
+		}
+	}
+}
+add_action( 'init', 'futuretech_register_resource_type_taxonomy' );
+
 function futuretech_podcast_category_add_fields() {
 	$fields = array(
 		'futuretech_podcast_host'              => __( 'Show host', 'ai-futuretech' ),
@@ -157,8 +205,124 @@ function futuretech_enqueue_assets() {
 		futuretech_asset_version( '/assets/js/main.js' ),
 		true
 	);
+
+	if ( is_page_template( 'templates/page-contact.php' ) ) {
+		wp_localize_script(
+			'futuretech-main',
+			'futuretechContact',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'futuretech_contact_form' ),
+				'errors'  => array(
+					'generic' => __( 'Your message could not be sent. Please try again.', 'ai-futuretech' ),
+					'unavailable' => __( 'The contact form is not available right now. Please try again later.', 'ai-futuretech' ),
+					'sending' => __( 'Sending your message…', 'ai-futuretech' ),
+				),
+			)
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'futuretech_enqueue_assets' );
+
+function futuretech_handle_contact_form() {
+	$nonce = isset( $_POST['nonce'] ) && is_string( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : '';
+	if ( ! wp_verify_nonce( $nonce, 'futuretech_contact_form' ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'This form has expired. Please refresh the page and try again.', 'ai-futuretech' ) ),
+			403
+		);
+	}
+
+	$fields = array( 'first_name', 'last_name', 'email', 'phone', 'message' );
+	$data   = array();
+
+	foreach ( $fields as $field ) {
+		$value       = isset( $_POST[ $field ] ) && is_string( $_POST[ $field ] ) ? wp_unslash( $_POST[ $field ] ) : '';
+		$data[ $field ] = sanitize_text_field( $value );
+	}
+	$data['message'] = isset( $_POST['message'] ) && is_string( $_POST['message'] )
+		? sanitize_textarea_field( wp_unslash( $_POST['message'] ) )
+		: '';
+
+	$errors = array();
+	if ( '' === $data['first_name'] || strlen( $data['first_name'] ) > 80 ) {
+		$errors['first_name'] = __( 'Enter a first name using no more than 80 characters.', 'ai-futuretech' );
+	}
+	if ( '' === $data['last_name'] || strlen( $data['last_name'] ) > 80 ) {
+		$errors['last_name'] = __( 'Enter a last name using no more than 80 characters.', 'ai-futuretech' );
+	}
+	if ( ! is_email( $data['email'] ) || strlen( $data['email'] ) > 254 ) {
+		$errors['email'] = __( 'Enter a valid email address.', 'ai-futuretech' );
+	}
+	if ( strlen( $data['phone'] ) > 40 ) {
+		$errors['phone'] = __( 'Enter a phone number using no more than 40 characters.', 'ai-futuretech' );
+	}
+	if ( '' === $data['message'] || strlen( $data['message'] ) > 5000 ) {
+		$errors['message'] = __( 'Enter a message using no more than 5,000 characters.', 'ai-futuretech' );
+	}
+	$privacy_consent = isset( $_POST['privacy_consent'] ) && is_string( $_POST['privacy_consent'] )
+		? sanitize_text_field( wp_unslash( $_POST['privacy_consent'] ) )
+		: '';
+	if ( '1' !== $privacy_consent ) {
+		$errors['privacy_consent'] = __( 'Please agree to the privacy policy before sending your message.', 'ai-futuretech' );
+	}
+	$website = isset( $_POST['website'] ) && is_string( $_POST['website'] )
+		? sanitize_text_field( wp_unslash( $_POST['website'] ) )
+		: '';
+	if ( '' !== $website ) {
+		$errors['form'] = __( 'We could not accept this submission.', 'ai-futuretech' );
+	}
+
+	if ( ! empty( $errors ) ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'Please check the highlighted fields and try again.', 'ai-futuretech' ),
+				'fields'  => $errors,
+			),
+			400
+		);
+	}
+
+	$recipient = sanitize_email( get_option( 'admin_email' ) );
+	if ( ! is_email( $recipient ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'The contact form is not configured yet. Please contact the site administrator.', 'ai-futuretech' ) ),
+			500
+		);
+	}
+
+	$subject = sprintf(
+		/* translators: %s: sender's full name */
+		__( 'New contact form message from %s', 'ai-futuretech' ),
+		$data['first_name'] . ' ' . $data['last_name']
+	);
+	$body = implode(
+		"\n",
+		array(
+			__( 'A new message was submitted through the website contact form.', 'ai-futuretech' ),
+			'',
+			sprintf( __( 'Name: %s %s', 'ai-futuretech' ), $data['first_name'], $data['last_name'] ),
+			sprintf( __( 'Email: %s', 'ai-futuretech' ), $data['email'] ),
+			sprintf( __( 'Phone: %s', 'ai-futuretech' ), '' !== $data['phone'] ? $data['phone'] : __( 'Not provided', 'ai-futuretech' ) ),
+			'',
+			__( 'Message:', 'ai-futuretech' ),
+			$data['message'],
+		)
+	);
+
+	if ( ! wp_mail( $recipient, $subject, $body, array( 'Reply-To: ' . $data['email'] ) ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'We could not send your message right now. Please try again later.', 'ai-futuretech' ) ),
+			500
+		);
+	}
+
+	wp_send_json_success(
+		array( 'message' => __( 'Thanks for reaching out. Your message has been sent.', 'ai-futuretech' ) )
+	);
+}
+add_action( 'wp_ajax_futuretech_contact_form', 'futuretech_handle_contact_form' );
+add_action( 'wp_ajax_nopriv_futuretech_contact_form', 'futuretech_handle_contact_form' );
 
 function futuretech_enqueue_stylesheet( $handle, $name, $dependencies = array() ) {
 	$relative_path = '/assets/css/' . $name . '.css';
