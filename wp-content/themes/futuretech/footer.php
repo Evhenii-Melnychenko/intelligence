@@ -3,15 +3,19 @@ $footer_podcast_category = get_category_by_slug( 'podcasts' );
 if ( ! $footer_podcast_category ) {
 	$footer_podcast_category = get_category_by_slug( 'podcast' );
 }
+
 $footer_podcast_children = $footer_podcast_category
 	? get_term_children( (int) $footer_podcast_category->term_id, 'category' )
 	: array();
+
 if ( is_wp_error( $footer_podcast_children ) ) {
 	$footer_podcast_children = array();
 }
+
 $footer_excluded_category_ids = $footer_podcast_category
 	? array_merge( array( (int) $footer_podcast_category->term_id ), $footer_podcast_children )
 	: array();
+
 $footer_podcast_shows = $footer_podcast_category
 	? get_categories(
 		array(
@@ -22,6 +26,7 @@ $footer_podcast_shows = $footer_podcast_category
 		)
 	)
 	: array();
+
 $footer_categories = get_categories(
 	array(
 		'hide_empty' => true,
@@ -31,6 +36,7 @@ $footer_categories = get_categories(
 		'exclude'    => $footer_excluded_category_ids,
 	)
 );
+
 $footer_posts = get_posts(
 	array(
 		'post_type'           => 'post',
@@ -40,6 +46,7 @@ $footer_posts = get_posts(
 		'category__not_in'    => $footer_excluded_category_ids,
 	)
 );
+
 $footer_resource_types = get_terms(
 	array(
 		'taxonomy'   => 'resource_type',
@@ -48,12 +55,15 @@ $footer_resource_types = get_terms(
 		'order'      => 'ASC',
 	)
 );
+
 if ( is_wp_error( $footer_resource_types ) ) {
 	$footer_resource_types = array();
 }
+
 $footer_privacy_url = get_privacy_policy_url();
 $footer_terms_page  = get_page_by_path( 'terms-and-conditions' );
 ?>
+
 <footer class="site-footer">
 	<div class="site-container site-footer__main">
 		<nav class="site-footer__column" aria-label="<?php esc_attr_e( 'Home links', 'ai-futuretech' ); ?>">
@@ -70,7 +80,7 @@ $footer_terms_page  = get_page_by_path( 'terms-and-conditions' );
 		<nav class="site-footer__column" aria-label="<?php esc_attr_e( 'News links', 'ai-futuretech' ); ?>">
 			<h2 class="site-footer__heading"><?php esc_html_e( 'News', 'ai-futuretech' ); ?></h2>
 			<ul class="site-footer__list">
-				<li><a href="<?php echo esc_url( futuretech_get_posts_page_url() ); ?>"><?php esc_html_e( 'Trending Stories', 'ai-futuretech' ); ?></a></li>
+				<li><a href="<?php echo esc_url( futuretech_page_url( 'news' ) ); ?>"><?php esc_html_e( 'Trending Stories', 'ai-futuretech' ); ?></a></li>
 				<?php foreach ( $footer_categories as $footer_category ) : ?>
 					<li><a href="<?php echo esc_url( get_category_link( $footer_category->term_id ) ); ?>"><?php echo esc_html( $footer_category->name ); ?></a></li>
 				<?php endforeach; ?>

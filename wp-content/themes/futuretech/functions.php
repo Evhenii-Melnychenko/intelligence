@@ -178,11 +178,12 @@ function futuretech_enqueue_assets() {
 		futuretech_enqueue_stylesheet( 'futuretech-ai-intro', 'ai-intro', array( 'futuretech-main' ) );
 	}
 
-	if ( is_archive() || is_search() || is_single() || ( is_home() && ! is_front_page() ) ) {
+	if ( is_archive() || is_search() || is_single() || is_page_template( 'templates/page-news.php' ) || ( is_home() && ! is_front_page() ) ) {
 		futuretech_enqueue_stylesheet( 'futuretech-news', 'news', array( 'futuretech-main' ) );
 	}
 
 	$page_styles = array(
+		'templates/page-news.php'     => 'news',
 		'templates/page-podcasts.php'  => 'podcasts',
 		'templates/page-resources.php' => 'resources',
 		'templates/page-contact.php'   => 'contact',
@@ -221,8 +222,104 @@ function futuretech_enqueue_assets() {
 			)
 		);
 	}
+
+	if ( is_single() ) {
+		wp_localize_script(
+			'futuretech-main',
+			'futuretechEngagement',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'futuretech_post_engagement' ),
+				'errors'  => array(
+					'request'       => __( 'This action could not be completed. Please try again.', 'ai-futuretech' ),
+					'share'         => __( 'Sharing is not available in this browser.', 'ai-futuretech' ),
+					'shareComplete' => __( 'Article shared.', 'ai-futuretech' ),
+					'viewRecorded'  => __( 'View recorded.', 'ai-futuretech' ),
+					'likeAdded'     => __( 'You liked this article.', 'ai-futuretech' ),
+					'likeRemoved'   => __( 'Your like was removed.', 'ai-futuretech' ),
+				),
+			)
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'futuretech_enqueue_assets' );
+
+function futuretech_get_engagement_count( $post_id, $event ) {
+	$allowed_events = array( 'views', 'likes', 'shares' );
+	if ( ! in_array( $event, $allowed_events, true ) ) {
+		return 0;
+	}
+
+	return max( 0, (int) get_post_meta( $post_id, '_futuretech_' . $event, true ) );
+}
+
+function futuretech_format_engagement_count( $count ) {
+	$count = max( 0, (int) $count );
+	if ( $count >= 1000000 ) {
+		return number_format_i18n( $count / 1000000, 1 ) . 'm';
+	}
+	if ( $count >= 1000 ) {
+		return number_format_i18n( $count / 1000, 1 ) . 'k';
+	}
+
+	return number_format_i18n( $count );
+}
+
+function futuretech_handle_post_engagement() {
+	check_ajax_referer( 'futuretech_post_engagement', 'nonce' );
+
+	$post_id = isset( $_POST['postId'] ) ? absint( wp_unslash( $_POST['postId'] ) ) : 0;
+	$event   = isset( $_POST['event'] ) && is_string( $_POST['event'] ) ? sanitize_key( wp_unslash( $_POST['event'] ) ) : '';
+	$post    = get_post( $post_id );
+
+	if ( ! $post || 'post' !== $post->post_type || 'publish' !== $post->post_status || ! in_array( $event, array( 'view', 'like', 'share' ), true ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'This engagement action is invalid.', 'ai-futuretech' ) ),
+			400
+		);
+	}
+
+	$meta_event  = 'view' === $event ? 'views' : ( 'like' === $event ? 'likes' : 'shares' );
+	$meta_key    = '_futuretech_' . $meta_event;
+	$cookie_name = 'futuretech_' . $event . '_' . $post_id;
+	$count       = futuretech_get_engagement_count( $post_id, $meta_event );
+	$liked       = false;
+
+	if ( 'view' === $event ) {
+		if ( empty( $_COOKIE[ $cookie_name ] ) ) {
+			$count++;
+			update_post_meta( $post_id, $meta_key, $count );
+			setcookie( $cookie_name, '1', time() + 30 * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+		}
+	} elseif ( 'like' === $event ) {
+		if ( empty( $_COOKIE[ $cookie_name ] ) ) {
+			$count++;
+			update_post_meta( $post_id, $meta_key, $count );
+			setcookie( $cookie_name, '1', time() + YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+			$liked = true;
+		} else {
+			$count = max( 0, $count - 1 );
+			update_post_meta( $post_id, $meta_key, $count );
+			setcookie( $cookie_name, '', time() - HOUR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+		}
+	} else {
+		$count++;
+		update_post_meta( $post_id, $meta_key, $count );
+	}
+
+	wp_send_json_success(
+		array(
+			'counts' => array(
+				'like'  => futuretech_get_engagement_count( $post_id, 'likes' ),
+				'view'  => futuretech_get_engagement_count( $post_id, 'views' ),
+				'share' => futuretech_get_engagement_count( $post_id, 'shares' ),
+			),
+			'liked'  => $liked,
+		)
+	);
+}
+add_action( 'wp_ajax_futuretech_post_engagement', 'futuretech_handle_post_engagement' );
+add_action( 'wp_ajax_nopriv_futuretech_post_engagement', 'futuretech_handle_post_engagement' );
 
 function futuretech_handle_contact_form() {
 	$nonce = isset( $_POST['nonce'] ) && is_string( $_POST['nonce'] ) ? wp_unslash( $_POST['nonce'] ) : '';
@@ -357,7 +454,8 @@ add_filter( 'nav_menu_css_class', 'futuretech_primary_menu_item_classes' );
 function futuretech_primary_menu_fallback() {
 	$items = array(
 		array( __( 'Home', 'ai-futuretech' ), home_url( '/' ) ),
-		array( __( 'News', 'ai-futuretech' ), home_url( '/#latest-stories' ) ),
+		array( __( 'News', 'ai-futuretech' ), futuretech_page_url( 'news' ) ),
+		array( __( 'Blog', 'ai-futuretech' ), futuretech_get_posts_page_url() ),
 		array( __( 'Podcasts', 'ai-futuretech' ), futuretech_page_url( 'podcasts' ) ),
 		array( __( 'Resources', 'ai-futuretech' ), futuretech_page_url( 'resources' ) ),
 	);

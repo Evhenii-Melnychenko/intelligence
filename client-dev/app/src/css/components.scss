@@ -1,3 +1,5 @@
+@import "components/index";
+
 html {
   scroll-behavior: smooth;
   background: var(--color-bg);
@@ -183,7 +185,6 @@ button {
 }
 
 .button:hover {
-  transform: translateY(-2px);
   background: #ffe05c;
 }
 
@@ -246,24 +247,14 @@ button {
 }
 
 .category-list__link, .category-list__button {
-  display: inline-flex;
-  min-height: 42px;
-  align-items: center;
-  padding: 0 16px;
-  border: 1px solid var(--color-border-strong);
-  border-radius: 7px;
-  background: transparent;
-  color: var(--color-muted);
-  font-size: 13px;
-  cursor: pointer;
-  transition: color var(--transition), border-color var(--transition), background var(--transition);
+  @extend .button;
 }
 
-.category-list__link:hover, .category-list__button:hover, .category-list__link.is-active, .category-list__button[aria-selected=true] {
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-bg);
-}
+// .category-list__link:hover, .category-list__button:hover, .category-list__link.is-active, .category-list__button[aria-selected=true] {
+//   border-color: var(--color-accent);
+//   background: var(--color-accent);
+//   color: var(--color-bg);
+// }
 
 .post-grid {
   display: grid;

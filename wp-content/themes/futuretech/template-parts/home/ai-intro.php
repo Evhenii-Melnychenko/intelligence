@@ -50,7 +50,7 @@
 				<p><?php esc_html_e( 'Stay Current', 'ai-futuretech' ); ?></p>
 				<p class="ai-intro__highlight-description"><?php esc_html_e( 'Over 1,000 articles published monthly', 'ai-futuretech' ); ?></p>
 			</div>
-			<a class="ai-intro__highlight-link" href="<?php echo esc_url( futuretech_get_posts_page_url() ); ?>" aria-label="<?php esc_attr_e( 'Explore latest news updates', 'ai-futuretech' ); ?>"><span aria-hidden="true">↗</span></a>
+			<a class="ai-intro__highlight-link" href="<?php echo esc_url( futuretech_page_url( 'news' ) ); ?>" aria-label="<?php esc_attr_e( 'Explore latest news updates', 'ai-futuretech' ); ?>"><span aria-hidden="true">↗</span></a>
 		</article>
 
 		<article class="ai-intro__highlight">
