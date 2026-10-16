@@ -30,21 +30,15 @@
   }
 
   &__all {
+    @extend %outlined-link;
+
     display: inline-flex;
     align-items: center;
     gap: 8px;
     flex: 0 0 auto;
     padding: 10px 13px;
-    border: 1px solid var(--color-border);
     border-radius: 6px;
-    color: var(--color-muted);
     font-size: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem);
-    transition: border-color var(--transition), color var(--transition);
-
-    &:hover {
-      border-color: var(--color-accent);
-      color: var(--color-text);
-    }
 
     span {
       color: var(--color-accent);
@@ -106,8 +100,6 @@
 .reader-review__name {
   margin: 0;
   font-size: clamp(1.125rem, 1.0893rem + 0.1786vw, 1.25rem);
-  font-weight: 500;
-  line-height: 1.4;
 }
 
 .reader-review__location {
@@ -198,7 +190,6 @@
     padding: 14px 18px;
     border-radius: 10px;
     font-size: 16px;
-    transition: border-color var(--transition), color var(--transition);
 
     span {
       font-size: 24px;

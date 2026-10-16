@@ -15,6 +15,7 @@ client-dev/
 │   └── src/
 │       ├── css/
 │       │   ├── basik/                 # Reset, variables, typography, mixins
+│       │   ├── components/            # Shared SCSS placeholders and component styles
 │       │   ├── pages/                 # Page and section SCSS partials
 │       │   ├── components.scss        # Shared components and global styles
 │       │   ├── main.scss              # Shared stylesheet entry
@@ -97,6 +98,20 @@ Paths are configured in `gulp/config/path.js`:
 The SCSS entry points are listed in `gulp/tasks/scss.js`. JavaScript is bundled
 from `app/src/js/main.js` by Webpack and written to
 `wp-content/themes/futuretech/assets/js/main.js`.
+
+### Shared SCSS styles
+
+Reusable link styles are defined in
+`app/src/css/components/_outlined-link.scss` as Sass placeholders:
+
+- `%outlined-link` provides the shared border, muted text color, and hover and
+  keyboard-focus states for outlined links.
+- `%text-arrow-link` provides shared layout and hover and focus styles for
+  inline text links with an accent-colored arrow.
+
+Page and section styles reuse these patterns with `@extend`, while keeping
+their own spacing, sizing, and backgrounds. The shared partial is imported by
+each stylesheet entry point that uses these placeholders.
 
 The theme loads `main.css` globally and page-specific stylesheets as needed:
 

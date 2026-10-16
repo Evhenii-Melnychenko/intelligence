@@ -92,7 +92,6 @@
   &__visual-label {
     margin: 0 0 8px;
     color: var(--color-accent);
-    font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -123,7 +122,6 @@
   &__label {
     flex: 0 0 auto;
     color: var(--color-muted);
-    font-size: 13px;
   }
 
   .category-list {
@@ -220,7 +218,6 @@
     display: inline-block;
     margin-top: 19px;
     color: var(--color-accent);
-    font-size: 13px;
   }
 }
 

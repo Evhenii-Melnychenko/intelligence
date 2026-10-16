@@ -378,15 +378,9 @@
   }
 
   &__related-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-muted);
-    text-decoration: none;
+    @extend %text-arrow-link;
 
-    span {
-      color: var(--color-accent);
-    }
+    color: var(--color-muted);
   }
 
   &__related-grid {

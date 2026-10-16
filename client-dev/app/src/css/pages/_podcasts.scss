@@ -1,16 +1,13 @@
 .podcast-page {
-  padding-block: clamp(48px, 6vw, 72px);
+  padding-block: clamp(10px, 6vw, 72px);
 
   &__hero {
     margin-block-end: 20px;
   }
 
   &__intro {
-    max-width: 680px;
     margin-top: 12px;
     color: var(--color-muted);
-    font-size: 13px;
-    line-height: 1.7;
   }
 
   &__featured {
@@ -139,22 +136,16 @@
   }
 
   &__listen {
+    @extend %outlined-link;
+
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 6px;
-    color: var(--color-muted);
     white-space: nowrap;
-    transition: border-color var(--transition), color var(--transition);
 
     span {
       color: var(--color-accent);
-    }
-
-    &:hover,
-    &:focus-visible {
-      border-color: var(--color-accent);
-      color: var(--color-text);
     }
   }
 
@@ -207,21 +198,10 @@
   }
 
   &__more {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    @extend %text-arrow-link;
+
     margin-block-start: 18px;
     color: var(--color-text);
-    transition: color var(--transition);
-
-    span {
-      color: var(--color-accent);
-    }
-
-    &:hover,
-    &:focus-visible {
-      color: var(--color-accent);
-    }
   }
 
   &__media {
@@ -376,7 +356,6 @@
 
 @media (max-width: 520px) {
   .podcast-page {
-    padding-block: 42px;
 
     &__hero {
       margin-bottom: 28px;
@@ -433,10 +412,9 @@
     }
 
     &__stat {
-      padding: 8px 7px;
 
       dt {
-        font-size: 8px;
+        font-size: 0.875rem;
       }
     }
   }

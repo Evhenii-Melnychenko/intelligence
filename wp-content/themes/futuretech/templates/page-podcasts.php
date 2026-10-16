@@ -110,7 +110,7 @@ $latest_episodes = get_posts( $podcast_args );
 			<section class="podcast-page__episodes" aria-labelledby="podcast-episodes-title">
 				<div class="section-heading">
 					<div>
-						<h2 class="section-heading__title" id="podcast-episodes-title"><?php esc_html_e( 'Latest Podcast Episodes', 'ai-futuretech' ); ?></h2>
+						<h2><?php esc_html_e( 'Latest Podcast Episodes', 'ai-futuretech' ); ?></h2>
 					</div>
 				</div>
 				<div class="podcast-page__grid">

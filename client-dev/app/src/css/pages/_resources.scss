@@ -271,22 +271,11 @@
   }
 
   &__link {
-    display: inline-flex;
+    @extend %text-arrow-link;
+
     flex: 0 0 auto;
-    align-items: center;
-    gap: 8px;
     color: var(--color-muted);
     font-size: clamp(0.75rem, 0.6429rem + 0.5357vw, 1rem);
-    transition: color var(--transition);
-
-    span {
-      color: var(--color-accent);
-    }
-
-    &:hover,
-    &:focus-visible {
-      color: var(--color-text);
-    }
   }
 
   &[hidden] {
@@ -347,7 +336,7 @@
       padding: 10px 6px;
 
       > span {
-        font-size: 8px;
+        font-size: 0.875rem;
       }
     }
 
@@ -392,6 +381,7 @@
 
       span {
         padding: 8px 6px;
+        font-size: 0.875rem;
       }
     }
 

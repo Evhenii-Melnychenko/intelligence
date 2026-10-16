@@ -14,24 +14,6 @@
     align-items: end;
     gap: 30px;
     margin-bottom: 34px;
-
-    h1 {
-      max-width: 650px;
-      margin: 12px 0 0;
-      color: var(--color-text);
-      font-size: clamp(32px, 4.7vw, 58px);
-      font-weight: 500;
-      letter-spacing: -0.06em;
-      line-height: 1.08;
-    }
-
-    p {
-      max-width: 430px;
-      margin: 0 0 4px;
-      color: var(--color-muted);
-      font-size: 14px;
-      line-height: 1.65;
-    }
   }
 
   &__lead {
@@ -107,14 +89,6 @@
       }
     }
 
-    > p {
-      max-width: 760px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
     .news-page__meta {
       @media (max-width: 700px) {
         gap: 5px 12px;
@@ -146,15 +120,10 @@
   }
 
   &__read-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    @extend %text-arrow-link;
+
     margin-top: 16px;
     color: var(--color-muted);
-
-    span {
-      color: var(--color-accent);
-    }
   }
 
   &__top-stories {
@@ -169,10 +138,6 @@
 
     h3 {
       margin: 8px 0 0;
-      color: var(--color-text);
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.4;
     }
 
     .news-page__read-link {
@@ -264,16 +229,11 @@
     h3 {
       margin: 7px 0 5px;
       color: var(--color-text);
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.4;
     }
 
-    p {
+     p {
       margin: 0;
       color: var(--color-muted);
-      font-size: 12px;
-      line-height: 1.55;
     }
   }
 
@@ -334,9 +294,6 @@
   &__visual-card h3 {
     margin: 8px 0 0;
     color: var(--color-text);
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.4;
   }
 
   .site-pagination {
@@ -353,17 +310,6 @@
     &__intro {
       display: block;
       margin-bottom: 24px;
-
-      h1 {
-        max-width: 460px;
-        margin-top: 10px;
-        font-size: clamp(26px, 7vw, 34px);
-      }
-
-      p {
-        max-width: 480px;
-        margin-top: 8px;
-      }
     }
 
     &__lead {
@@ -411,7 +357,6 @@
 
       h3 {
         margin-top: 6px;
-        font-size: 12px;
       }
 
       .news-page__meta {

@@ -90,29 +90,19 @@
 
     &-title {
       margin: 0 0 6px;
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.4;
     }
 
     &-link {
+      @extend %outlined-link;
+
       display: inline-flex;
       align-items: center;
       gap: 8px;
       flex: 0 0 auto;
       padding: 10px 14px;
-      border: 1px solid var(--color-border);
       border-radius: 6px;
       background: var(--color-surface);
-      color: var(--color-muted);
       font-size: clamp(0.875rem, 0.8036rem + 0.3571vw, 1.125rem);
-      transition: border-color var(--transition), color var(--transition);
-
-      &:hover,
-      &:focus-visible {
-        border-color: var(--color-accent);
-        color: var(--color-text);
-      }
 
       span {
         color: var(--color-accent);
@@ -282,7 +272,6 @@
 
   .ai-intro__highlight-content .ai-intro__highlight-description {
     margin-top: 10px;
-    font-size: 13px;
   }
 
   .ai-intro__highlight-link {

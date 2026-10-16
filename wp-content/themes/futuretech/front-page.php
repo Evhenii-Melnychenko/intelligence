@@ -41,7 +41,7 @@ $home_categories = get_categories( array(
 	<section class="site-container home-section home-articles" id="latest-stories" aria-labelledby="latest-stories-title">
 		<div class="section-heading">
 			<div>
-				<h2 class="section-heading__title" id="latest-stories-title"><?php esc_html_e( 'Stories for what comes next', 'ai-futuretech' ); ?></h2>
+				<h2><?php esc_html_e( 'Stories for what comes next', 'ai-futuretech' ); ?></h2>
 				<p class="section-heading__description"><?php esc_html_e( 'Fresh perspectives on the breakthroughs and questions defining our future.', 'ai-futuretech' ); ?></p>
 			</div>
 			<a class="section-heading__link" href="<?php echo esc_url( futuretech_get_posts_page_url() ); ?>"><?php esc_html_e( 'View all stories', 'ai-futuretech' ); ?> <span aria-hidden="true">↗</span></a>
@@ -86,8 +86,7 @@ $home_categories = get_categories( array(
 	<section class="site-container home-section" aria-labelledby="home-resources-title">
 		<div class="section-heading">
 			<div>
-				<span class="eyebrow"><?php esc_html_e( 'Learn and explore', 'ai-futuretech' ); ?></span>
-				<h2 class="section-heading__title" id="home-resources-title"><?php esc_html_e( 'Ideas in every format', 'ai-futuretech' ); ?></h2>
+				<h2><?php esc_html_e( 'Ideas in every format', 'ai-futuretech' ); ?></h2>
 			</div>
 			<a class="section-heading__link" href="<?php echo esc_url( futuretech_page_url( 'resources' ) ); ?>"><?php esc_html_e( 'All resources', 'ai-futuretech' ); ?> <span aria-hidden="true">↗</span></a>
 		</div>
