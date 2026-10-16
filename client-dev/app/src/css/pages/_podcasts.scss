@@ -87,7 +87,6 @@
   &__show-title {
     margin: 0;
     color: var(--color-text);
-    font-size: 14px;
     font-weight: 500;
   }
 
@@ -189,8 +188,6 @@
   &__excerpt {
     margin: 0;
     color: var(--color-muted);
-    font-size: 12px;
-    line-height: 1.65;
   }
 
   &__details {
@@ -321,7 +318,6 @@
       &__play {
         width: 34px;
         height: 34px;
-        font-size: 12px;
       }
 
       &__content {
@@ -420,7 +416,6 @@
     &__host,
     &__listen {
       padding: 9px;
-      font-size: 9px;
     }
 
     &--featured {
