@@ -52,7 +52,6 @@ $news_feed = new WP_Query(
 	<section class="site-container news-page__top" aria-labelledby="news-page-title">
 		<header class="news-page__intro">
 			<div>
-				<span class="eyebrow"><?php esc_html_e( 'Newsroom', 'ai-futuretech' ); ?></span>
 				<h1 id="news-page-title"><?php esc_html_e( 'Today’s Headlines: Stay Informed', 'ai-futuretech' ); ?></h1>
 			</div>
 			<p><?php esc_html_e( 'The latest stories, perspectives and visual insights from across the world of technology.', 'ai-futuretech' ); ?></p>
@@ -116,7 +115,6 @@ $news_feed = new WP_Query(
 		<div class="site-container">
 			<header class="news-page__section-heading">
 				<div>
-					<span class="eyebrow"><?php esc_html_e( 'Latest updates', 'ai-futuretech' ); ?></span>
 					<h2 id="news-feed-title"><?php esc_html_e( 'Discover the World of Headlines', 'ai-futuretech' ); ?></h2>
 				</div>
 				<a href="<?php echo esc_url( futuretech_get_posts_page_url() ); ?>"><?php esc_html_e( 'Explore the blog', 'ai-futuretech' ); ?><span aria-hidden="true">↗</span></a>
@@ -180,7 +178,6 @@ $news_feed = new WP_Query(
 		<section class="site-container news-page__visual-section" aria-labelledby="news-visual-title">
 			<header class="news-page__section-heading">
 				<div>
-					<span class="eyebrow"><?php esc_html_e( 'Stories in pictures', 'ai-futuretech' ); ?></span>
 					<h2 id="news-visual-title"><?php esc_html_e( 'Visual Insights for the Modern Viewer', 'ai-futuretech' ); ?></h2>
 				</div>
 				<a href="<?php echo esc_url( futuretech_get_posts_page_url() ); ?>"><?php esc_html_e( 'View all stories', 'ai-futuretech' ); ?><span aria-hidden="true">↗</span></a>

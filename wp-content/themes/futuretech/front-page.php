@@ -41,7 +41,6 @@ $home_categories = get_categories( array(
 	<section class="site-container home-section home-articles" id="latest-stories" aria-labelledby="latest-stories-title">
 		<div class="section-heading">
 			<div>
-				<span class="eyebrow"><?php esc_html_e( 'The latest', 'ai-futuretech' ); ?></span>
 				<h2 class="section-heading__title" id="latest-stories-title"><?php esc_html_e( 'Stories for what comes next', 'ai-futuretech' ); ?></h2>
 				<p class="section-heading__description"><?php esc_html_e( 'Fresh perspectives on the breakthroughs and questions defining our future.', 'ai-futuretech' ); ?></p>
 			</div>
